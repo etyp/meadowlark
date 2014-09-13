@@ -3,3 +3,4 @@ node_modules
 
 # others
 .DS_Store
+credentials.js
