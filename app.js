@@ -1,12 +1,23 @@
 var express = require('express');
-
+var bodyParser = require('body-parser');
 var app = express();
 
+// Set up bodyParser
+app.use(bodyParser());
+
 // Set up handlebars as our template engine
-var handlebars = require('express3-handlebars');
-app.engine('handlebars', handlebars({
-	defaultLayout: 'main'
-}));
+var handlebars = require('express3-handlebars').create({
+	defaultLayout: 'main',
+	helpers: {
+		section: function(name, options) {
+			if (!this._sections) this._sections = {};
+			this._sections[name] = options.fn(this);
+			console.log("in helper");
+			return null;
+		}
+	}
+});
+app.engine('handlebars', handlebars.engine);
 app.set('view engine', 'handlebars');
 
 app.set('port', process.env.PORT || 3000);
@@ -33,16 +44,37 @@ app.get('/about', function(req, res) {
 	});
 });
 
-app.get('/tours/hood-river', function (req, res) {
+app.get('/tours/hood-river', function(req, res) {
 	res.render('tours/hood-river');
 });
 
-app.get('/tours/oregon-coast', function (req, res) {
+app.get('/tours/oregon-coast', function(req, res) {
 	res.render('tours/oregon-coast');
 });
 
-app.get('/tours/request-group-rate', function (req, res) {
+app.get('/tours/request-group-rate', function(req, res) {
 	res.render('tours/request-group-rate');
+});
+
+app.get('/newsletter', function (req, res) {
+	res.render('newsletter', { csrf: 'CSRF token here!' });
+});
+
+app.post('/process', function (req, res) {
+	if (req.xhr || req.accepts('json, html') === 'json') {
+		res.send({success: true});
+	}
+	else {
+		console.log("Form querystring: "+req.query.form);
+		console.log("CSRF token: "+req.body._csrf);
+		console.log("Name field: "+req.body.name);
+		console.log("Email field: "+req.body.email);
+		res.redirect(303, '/thank-you');
+	}
+});
+
+app.get('/thank-you', function (req, res) {
+	res.render("thank-you");
 });
 
 

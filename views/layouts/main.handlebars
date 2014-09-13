@@ -4,13 +4,39 @@
 	{{#if showTests}}
 		<link rel="stylesheet" href="/vendor/mocha.css">
 	{{/if}}
-	<script src="//code.jquery.com/jquery-2.0.2.min.js"></script>
+	<link rel="stylesheet" href="/libs/bootstrap/dist/css/bootstrap.min.css">
+
+	<script src="/libs/jquery/dist/jquery.min.js"></script>
+	<script src="/libs/bootstrap/dist/js/bootstrap.min.js"></script>
 </head>
 <body>
-	<header><img src="/img/lego-movie.png" /></header>
-	{{{body}}}
+	<div class="container">
+		<nav class="navbar navbar-default" role="navigation">
+			<div class="container-fluid">
+				<div class="navbar-header">
+			      <a class="navbar-brand" href="/">Meadowlark Travel</a>
+			    </div>
+			    <ul class="nav navbar-nav navbar-right">
+					<li><a href="/about">About</a></li>
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown">Tours <span class="caret"></span></a>
+						<ul class="dropdown-menu" role="menu">
+							<li><a href="/tours/hood-river">Hood River</a></li>
+							<li><a href="/tours/oregon-coast">Oregon Coast</a></li>
+							<li><a href="/tours/request-group-rate">Request Group Rate</a></li>
+						</ul>
+					</li>
+			    </ul>
+			</div>
+		</nav>
+
+		{{{body}}}
+		{{{_sections.jquerySection}}}
+		
 
 
+
+	</div>
 
 
 {{!-- 	{{#if showTests}}
@@ -27,5 +53,6 @@
 		{{/if}}
 		<script>mocha.run();</script>
 	{{/if}} --}}
+
 </body>
 </html>
