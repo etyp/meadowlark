@@ -29,6 +29,14 @@
 			    </ul>
 			</div>
 		</nav>
+		{{#if flash}}
+			<div class="alert alert-dismissable alert-{{flash.type}}">
+				<button class="close" type="button" data-dismiss="alert" aria-hidden="true">
+					&:times;
+				</button>
+				<strong>{{flash.intro}}</strong> {{{flash.message}}}
+			</div>
+		{{/if}}
 
 		{{{body}}}
 		{{{_sections.jquerySection}}}
